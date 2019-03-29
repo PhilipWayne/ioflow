@@ -1,18 +1,12 @@
-import functools
-
-import tensorflow as tf
-from tokenizer_tools.conllz.reader import read_conllz
-from tokenizer_tools.converter.conllz_to_offset import conllz_to_offset
+corpus_processor_mapping = {}
 
 
-def generator_fn(input_file):
-    with tf.io.gfile.GFile(input_file) as fd:
-        sentence_list = read_conllz(fd)
+def registry_corpus_processor(data_source_scheme, corpus_processor_class):
+    corpus_processor_mapping[data_source_scheme] = corpus_processor_class
 
-    for sentence in sentence_list:
-        offset_data, result = conllz_to_offset(sentence)
 
-        yield offset_data
+def get_corpus_processor(data_source_scheme):
+    return corpus_processor_mapping[data_source_scheme]
 
 
 class Corpus(object):
@@ -22,10 +16,18 @@ class Corpus(object):
     def __init__(self, config):
         self.config = config
         self.dataset_mapping = {}
+        corpus_processor_class = get_corpus_processor(config['data_source_scheme'])
+        self.corpus_processor = corpus_processor_class(config)
 
     def prepare(self):
-        self.dataset_mapping[self.TRAIN] = functools.partial(generator_fn, self.config['train'])
-        self.dataset_mapping[self.EVAL] = functools.partial(generator_fn, self.config['test'])
+        return self.corpus_processor.prepare()
 
     def get_generator_func(self, data_set):
-        return self.dataset_mapping[data_set]
+        return self.corpus_processor.get_generator_func(data_set)
+
+    def get_meta_info(self):
+        return self.corpus_processor.get_meta_info()
+
+
+from ioflow.corpus_processor.local_corpus_processor import LocalCorpusProcessor
+registry_corpus_processor('local', LocalCorpusProcessor)
