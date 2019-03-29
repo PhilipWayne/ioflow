@@ -33,6 +33,5 @@ class LocalCorpusProcessor(CorpusProcessorBase):
 
     def get_meta_info(self):
         return {
-            "vocab": np.loadtxt(self.config['vocab'], dtype=np.unicode, encoding=None),
             "tags": np.loadtxt(self.config['tags'], dtype=np.unicode, encoding=None)
         }
