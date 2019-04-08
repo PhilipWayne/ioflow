@@ -1,9 +1,10 @@
+import setuptools
 from setuptools import setup
 
 setup(
     name='ioflow',
     version='0.3.0',
-    packages=['ioflow'],
+    packages=setuptools.find_packages(),
     setup_requires=[
         'tensorflow',
         'tokenizer_tools'
