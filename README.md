@@ -68,3 +68,5 @@ model_saver = ModelSaver(config)
 model_saver.save_model(final_saved_model)
 ````
 
+## 可配置项
+环境变量 `_DEFAULT_CONFIG_FILE` 决定了配置文件的的路径，默认值为 `./configure.json`
