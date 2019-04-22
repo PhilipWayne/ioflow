@@ -2,7 +2,7 @@ import functools
 
 import tensorflow as tf
 import numpy as np
-from tokenizer_tools.conllz.reader import read_conllz
+from tokenizer_tools.conllz.reader import read_conllz, read_conllx
 from tokenizer_tools.converter.conllz_to_offset import conllz_to_offset
 
 from ioflow.corpus_processor.corpus_processor_base import CorpusProcessorBase
@@ -11,7 +11,8 @@ from ioflow.corpus import Corpus
 
 def generator_fn(input_file):
     with tf.io.gfile.GFile(input_file) as fd:
-        sentence_list = read_conllz(fd)
+        # sentence_list = read_conllz(fd)
+        sentence_list = read_conllx(fd)
 
     for sentence in sentence_list:
         offset_data, result = conllz_to_offset(sentence)
