@@ -14,5 +14,5 @@ setup(
     author='Xiaoquan Kong',
     author_email='u1mail2me@gmail.com',
     description='',
-    install_requires=['numpy', 'requests']
+    install_requires=['numpy', 'requests', 'flask']
 )
