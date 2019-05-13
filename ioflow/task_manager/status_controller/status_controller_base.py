@@ -6,7 +6,7 @@ class StatusControllerBase(object):
     def __init__(self, *args, **kwargs):
         pass
 
-    def __main__(self, pause_event, stop_event):
+    def __call__(self, pause_event, stop_event):
         return self.main(pause_event, stop_event)
 
     def main(self, pause_event, stop_event):
