@@ -1,11 +1,13 @@
 import functools
 from threading import Event, Thread
 
+from ioflow.task_manager.status_controller.status_controller_base import \
+    StatusControllerBase
 from ioflow.task_manager.task_manager_base import TaskManagerBase
 
 
 class TaskManager(TaskManagerBase):
-    def __init__(self, status_controller_func):
+    def __init__(self, status_controller: StatusControllerBase):
         pause_event = Event()
         pause_event.set()
 
@@ -14,11 +16,12 @@ class TaskManager(TaskManagerBase):
 
         self.pause_event = pause_event
         self.stop_event = stop_event
-        self.status_controller_func = status_controller_func
 
-        t = Thread(target=functools.partial(self.status_controller_func, pause_event, stop_event))
+        t = Thread(target=functools.partial(status_controller, pause_event, stop_event))
         t.setDaemon(True)
         t.start()
+
+        super().__init__()
 
     def should_stop(self) -> bool:
         """

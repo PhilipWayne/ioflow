@@ -1,35 +1,17 @@
 from flask import Flask, request
 
-PAUSE = 'pause'
-CONTINUE = 'continue'
-STOP = 'stop'
+from ioflow.task_manager.status_controller.status_controller_base import \
+    StatusControllerBase
 
 
-def local_status_controller(pause_event, stop_event):
-    app = Flask(__name__)
+class LocalStatusController(StatusControllerBase):
+    def main(self, pause_event, stop_event):
+        app = Flask(__name__)
 
-    @app.route("/")
-    def main():
-        cmd = request.args.get('cmd')
+        @app.route("/")
+        def main():
+            cmd = request.args.get('cmd')
 
-        if cmd not in [PAUSE, CONTINUE, STOP]:
-            raise ValueError()
+            self.exec(cmd, pause_event, stop_event)
 
-        if cmd == STOP:
-            stop_event.set()
-
-        if cmd == PAUSE:
-            if not pause_event.is_set():
-                return "Already pause"
-            else:
-                pause_event.clear()
-
-        elif cmd == CONTINUE:
-            if pause_event.is_set():
-                return "Process is not paused"
-            else:
-                pause_event.set()
-
-        return 'OK'
-
-    app.run()
+        app.run()
