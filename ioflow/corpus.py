@@ -31,3 +31,6 @@ class Corpus(object):
 
 from ioflow.corpus_processor.local_corpus_processor import LocalCorpusProcessor
 registry_corpus_processor('local', LocalCorpusProcessor)
+
+from ioflow.corpus_processor.http_corpus_processor import HttpCorpusProcessor
+registry_corpus_processor('http', HttpCorpusProcessor)
