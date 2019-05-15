@@ -11,20 +11,32 @@ from ioflow.corpus import Corpus
 
 
 def parse(obj):
+    # find entity
+    entity = None
+    for entity in obj['annotations']:
+        if entity['labels_type'] == 'slot':
+            break
+
+    # find label class_
+    class_ = None
+    for class_ in obj['annotations']:
+        if class_['labels_type'] == 'classify':
+            break
+
     span_set = SpanSet()
-    for span in obj.spans:
-        span_obj = Span(start=span.start, end=span.end, entity=span.type)
+    for span in entity['entities']:
+        span_obj = Span(start=int(span['start_index']), end=(int(span['start_index']) + int(span['slot_len'])), entity=span['slot_value'])
         span_set.append(span_obj)
 
-    label = obj.label
-    seq = Sequence(text=obj.text, span_set=span_set, label=label)
+    label = class_['classify']
+    seq = Sequence(text=obj['text'], span_set=span_set, label=label)
 
     return seq
 
 
 def generator_fn(config):
-    r = requests.get(config['data_url'], params={'task_id': config['task_id']})
-    sentence_list = r.json()
+    r = requests.post(config['data_url'], json={'taskId': config['task_id']})
+    sentence_list = r.json()['data']
 
     for sentence in sentence_list:
         offset_data = parse(sentence)
@@ -50,3 +62,17 @@ class HttpCorpusProcessor(CorpusProcessorBase):
 
     def get_meta_info(self):
         return request_meta_data(self.config)
+
+
+if __name__ == "__main__":
+    config = {
+        'data_url': 'http://10.43.10.48:8110/algo/corpusManger/getCorpusByTrainingTaskId',
+        'task_id': '5cd536215148635cc0fe29e2'
+    }
+
+    processor = HttpCorpusProcessor(config)
+    processor.prepare()
+    gfunc = processor.get_generator_func(Corpus.TRAIN)
+
+    for i in gfunc():
+        print(i)
