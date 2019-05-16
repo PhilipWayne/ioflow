@@ -29,6 +29,9 @@ class Corpus(object):
         return self.corpus_processor.get_meta_info()
 
 
+from ioflow.corpus_processor.raw_corpus_processor import RawCorpusProcessor
+registry_corpus_processor('raw', RawCorpusProcessor)
+
 from ioflow.corpus_processor.local_corpus_processor import LocalCorpusProcessor
 registry_corpus_processor('local', LocalCorpusProcessor)
 

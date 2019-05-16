@@ -10,7 +10,13 @@ def read_json_file(json_file):
         return json.load(fd)
 
 
-def read_configure() -> dict:
+def read_configure(return_empty=False) -> dict:
+    # set return_empty to True for not read config from env
+    # which can prevent unexpected result
+    # e.g. './configure.json' is not for this app, but for other using
+    if return_empty:
+        return {}
+
     active_configure_file = os.getenv('_DEFAULT_CONFIG_FILE', './configure.json')
 
     active_configure = read_json_file(active_configure_file)

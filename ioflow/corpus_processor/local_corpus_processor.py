@@ -34,5 +34,6 @@ class LocalCorpusProcessor(CorpusProcessorBase):
 
     def get_meta_info(self):
         return {
-            "tags": np.loadtxt(self.config['tags'], dtype=np.unicode, encoding=None)
+            "tags": np.loadtxt(self.config['tags'], dtype=np.unicode, encoding=None) if 'tags' in self.config else None,
+            "labels": np.loadtxt(self.config['labels'], dtype=np.unicode, encoding=None) if 'labels' in self.config else None
         }
