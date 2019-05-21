@@ -3,11 +3,21 @@ import os
 
 
 def read_json_file(json_file):
+    config_format = os.environ.get('IOFLOW_CFG_FORMAT', 'raw')
+
     if not os.path.exists(json_file):
         return None
 
-    with open(json_file) as fd:
-        return json.load(fd)
+    if config_format == 'raw':
+        with open(json_file) as fd:
+            return json.load(fd)
+    elif config_format == 'ecarx':
+        with open(json_file) as fd:
+            raw_data = json.load(fd)
+            data = raw_data['data']['params']
+            data['task_id'] = raw_data['data']['_id']
+
+            return data
 
 
 def read_configure(return_empty=False) -> dict:
