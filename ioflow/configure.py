@@ -15,7 +15,11 @@ def read_json_file(json_file):
         with open(json_file) as fd:
             raw_data = json.load(fd)
             data = raw_data['data']['params']
+
+            # inject task_id
             data['task_id'] = raw_data['data']['_id']
+            # set data source scheme
+            data['data_source_scheme'] = 'http'
 
             return data
 
