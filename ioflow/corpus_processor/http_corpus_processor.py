@@ -69,6 +69,7 @@ class HttpCorpusProcessor(CorpusProcessorBase):
 
     def prepare(self):
         self.dataset_mapping[Corpus.TRAIN] = functools.partial(generator_fn, self.config)
+        self.dataset_mapping[Corpus.EVAL] = None
 
     def get_generator_func(self, data_set):
         return self.dataset_mapping[data_set]
