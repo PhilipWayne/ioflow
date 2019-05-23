@@ -3,6 +3,7 @@ import os
 
 
 def read_json_file(json_file):
+    # TODO: implementation is ugly, using extendable way
     config_format = os.environ.get('IOFLOW_CFG_FORMAT', 'raw')
 
     if not os.path.exists(json_file):
