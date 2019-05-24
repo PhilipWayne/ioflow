@@ -38,6 +38,7 @@ class HttpBasedModelSaver(ModelSaverBase):
 
 if __name__ == "__main__":
     config = {
+        # 'model_saver_scheme': 'http',
         'model_saver_url': 'http://10.43.10.17:25005/hdfs/upload',
         # 'model_saver_url': 'http://127.0.0.1:8080/hdfs/upload',
         'task_id': '5ce3dfe15148635a5c04a688'
