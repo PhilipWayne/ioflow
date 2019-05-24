@@ -27,11 +27,11 @@ def parse(obj):
 
     span_set = SpanSet()
     for span in entity['entities']:
-        span_obj = Span(start=int(span['start_index']), end=(int(span['start_index']) + int(span['slot_len'])), entity=span['slot_value'])
+        span_obj = Span(start=int(span['start_index']), end=(int(span['start_index']) + int(span['slot_len'])), entity=span['slot_type'])
         span_set.append(span_obj)
 
     label = class_['classify'] if class_ else None
-    seq = Sequence(text=obj['text'], span_set=span_set, label=label)
+    seq = Sequence(text=[i for i in obj['text']], span_set=span_set, label=label)
 
     return seq
 
