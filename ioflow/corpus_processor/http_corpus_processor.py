@@ -1,4 +1,5 @@
 import functools
+import math
 
 import requests
 import numpy as np
@@ -36,10 +37,39 @@ def parse(obj):
     return seq
 
 
-def generator_fn(config):
+def get_corpus_count(config):
     r = requests.post(config['data_url'], json={'taskId': config['task_id']})
     parsed_data = r.json()
-    sentence_list = parsed_data['data']
+    return int(parsed_data['attr']['count'])
+
+
+def get_corpus_data_by_page(config, page_index, page_size):
+    r = requests.post(config['data_url'],
+                      json={'taskId': config['task_id'], 'currentPage': page_index, 'pageSize': page_size})
+    parsed_data = r.json()
+    return parsed_data['data']
+
+
+def generator_fn(config):
+    # default one
+    page_size = 10000
+
+    sentence_list = []
+
+    corpus_count = get_corpus_count(config)
+    total_page_num = math.ceil(corpus_count / page_size)
+
+    for i in range(1, total_page_num + 1):
+        print('fetch corpus > page: {}'.format(i))
+        sentence_list.extend(
+            get_corpus_data_by_page(config, i, page_size)
+        )
+
+    print('fetch corpus > done')
+
+    assert len(sentence_list) == corpus_count
+
+    print('fetch corpus > total count: {}'.format(corpus_count))
 
     for sentence in sentence_list:
         offset_data = parse(sentence)
@@ -80,9 +110,9 @@ class HttpCorpusProcessor(CorpusProcessorBase):
 
 if __name__ == "__main__":
     config = {
-        'data_url': 'http://10.43.10.48:8110/algo/corpusManger/getCorpusByTrainingTaskId',
-        'meta_data_url': 'http://10.43.10.48:8110/algo/corpusManger/getLabelsInfoByTaskId',
-        'task_id': '5ce3dfe15148635a5c04a688'
+        'data_url': 'http://10.43.10.92:8110/algo/corpusManger/getCorpusByTrainingTaskId',
+        'meta_data_url': 'http://10.43.10.92:8110/algo/corpusManger/getLabelsInfoByTaskId',
+        'task_id': '5ceca57b7c661383bc850fae'
     }
 
     processor = HttpCorpusProcessor(config)
