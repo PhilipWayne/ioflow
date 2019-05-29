@@ -3,6 +3,7 @@ import requests
 
 class TaskStatus(object):
     def __init__(self, config):
+        self.config = config
         self.DONE = 10
         self.START = 1
 
@@ -14,7 +15,7 @@ class TaskStatus(object):
             self.START: 'start'
         }
 
-        r = requests.post(config['progress_report_url'], json={'id': config['task_id'], 'progress': code_to_str[status]})
+        r = requests.post(self.config['progress_report_url'], json={'id': self.config['task_id'], 'progress': code_to_str[status]})
         assert r.status_code == 200
 
 
