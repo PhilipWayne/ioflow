@@ -1,5 +1,6 @@
 import functools
 import math
+import functools
 
 import requests
 import numpy as np
@@ -50,6 +51,17 @@ def get_corpus_data_by_page(config, page_index, page_size):
     return parsed_data['data']
 
 
+def run_then_cache_decorator(func):
+    memo = None
+    @functools.wraps(func)
+    def wrapper(*args):
+        if not memo:
+            memo = func(*args)
+        return memo
+    return wrapper
+
+
+@run_then_cache_decorator
 def generator_fn(config):
     # default one
     page_size = 10000
