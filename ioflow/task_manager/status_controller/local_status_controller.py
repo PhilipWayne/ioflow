@@ -14,4 +14,6 @@ class LocalStatusController(StatusControllerBase):
 
             self.exec(cmd, pause_event, stop_event)
 
+            return 'OK'
+
         app.run()

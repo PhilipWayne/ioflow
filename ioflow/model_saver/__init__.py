@@ -12,7 +12,7 @@ def get_model_saver(data_source_scheme):
 class ModelSaver(object):
     def __init__(self, config):
         self.config = config
-        model_saver_class = get_model_saver(config['model_saver_scheme'])
+        model_saver_class = get_model_saver(config.get('model_saver_scheme', 'raw'))
         self.model_saver = model_saver_class(config)
 
     def save_model(self, *args, **kwargs):
