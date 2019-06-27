@@ -1,5 +1,7 @@
 import requests
 
+from ioflow.performance_reporter.metric import Metric
+
 task_status_registry = {}
 
 
@@ -15,31 +17,45 @@ class BasePerformanceMetrics(object):
     def __init__(self, config):
         self.config = config
 
-    def set_metrics(self, metrics, global_step):
+    def send_metrics(self, metrics, step=None):
+        timestamp = int(time.time())
+        for k, v in metrics.items():
+            self.log_metric(k, v, timestamp=timestamp, step=step)
+
+    def log_metric(self, key, value, timestamp=None, step=None):
+        """ learned from MLflow log_metrics"""
+        timestamp = timestamp if timestamp is not None else int(time.time())
+        step = step if step is not None else 0
+
+        metric = Metric(key, value, timestamp, step)
+        self.post_metric(metric)
+
+    def post_metric(self, metric):
         raise NotImplementedError
 
 
 class RawPerformanceMetrics(BasePerformanceMetrics):
-    def __init__(self, config):
-        super().__init__(config)
-
-    def set_metrics(self, metrics, global_step):
-        print('{}: {} => {}'.format(self.__class__, global_step, metrics))
+    def post_metric(self, metric):
+        print('[{}]{}: {} => {}'.format(
+            self.config['task_id'],
+            metric.timestamp, metric.key, metric.value))
 
 
 registry_performance_metrics_class('raw', RawPerformanceMetrics)
 
 
 class HttpPerformanceMetrics(BasePerformanceMetrics):
-    def __init__(self, config):
-        super().__init__(config)
+    def post_metric(self, metric):
+        data = {
+            'id': self.config['task_id'],
+            'key': metric.key,
+            'value': metric.value,
+            'step': metric.step,
+            'timestamp': metric.timestamp
+        }
 
-    def set_metrics(self, metrics, global_step):
-        json_data = {'id': self.config['task_id']}
-        json_data.update({'step': {'date-time': None, 'global_step': global_step}, 'metrics': metrics})
-
-        r = requests.post(self.config['metrics_report_url'], json=json_data)
-        assert r.status_code == 200
+        r = requests.post(self.config['metrics_report_url'], json=data)
+        assert r.ok
 
 
 registry_performance_metrics_class('http', HttpPerformanceMetrics)
