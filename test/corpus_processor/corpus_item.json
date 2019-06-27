@@ -1,0 +1,22 @@
+{
+  "id": "5d11c0344420bb1e20078fd9",
+  "annotations": {
+    "entity": [
+      {
+        "start": "0",
+        "length": "3",
+        "type": "人名"
+      },
+      {
+        "start": "4",
+        "length": "3",
+        "type": "歌曲"
+      }
+    ]
+  },
+  "text": "周杰伦的七里香",
+  "classifications": {
+    "intent": "PLAY_SONG",
+    "domain": "yyy"
+  }
+}
