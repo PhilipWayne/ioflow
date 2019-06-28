@@ -37,7 +37,7 @@ def generator_fn(input_file):
 
 
 def corpus_download(config):
-    corpus_file = download_file(config['corpus_download_url'], json={"trainId": config['task_id']})
+    corpus_file = download_file(config['corpus_download_url'], params={"trainId": config['task_id']})
     return corpus_file
 
 

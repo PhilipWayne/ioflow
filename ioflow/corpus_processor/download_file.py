@@ -13,7 +13,7 @@ def download_file(url, filename=None, **kwargs):
         filename = os.path.join(tempfile.mkdtemp(), 'corpus.data')
 
     # NOTE the stream=True parameter below
-    with requests.post(url, stream=True, **kwargs) as r:
+    with requests.get(url, stream=True, **kwargs) as r:
         r.raise_for_status()
         with open(filename, 'wb') as f:
             chunk_size = 1 << 10  # e.g. 1024
@@ -26,7 +26,7 @@ def download_file(url, filename=None, **kwargs):
 
 if __name__ == "__main__":
     # download_file("http://10.43.13.20:25005/hdfs/download", filename='download.txt', json={"trainId": "5d01cc3bb775fa16367a2f85"})
-    result = download_file("http://10.43.13.20:25005/hdfs/download", json={"trainId": "5d01cc3bb775fa16367a2f85"})
+    result = download_file("http://10.43.10.17:25005/hdfs/download", params={"trainId": "5d01cc3bb775fa16367a2f85"})
 
     print(result)
 
