@@ -1,3 +1,5 @@
+import time
+
 import requests
 
 from ioflow.performance_reporter.metric import Metric
