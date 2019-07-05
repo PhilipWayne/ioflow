@@ -1,4 +1,4 @@
-import time
+import datetime
 
 import requests
 
@@ -8,7 +8,7 @@ task_status_registry = {}
 
 
 def get_performance_metrics_class(config):
-    return task_status_registry[config.get('performance_metrics_schema', 'raw')]
+    return task_status_registry[config.get('metrics_report_scheme', 'raw')]
 
 
 def registry_performance_metrics_class(schema, class_):
@@ -16,17 +16,19 @@ def registry_performance_metrics_class(schema, class_):
 
 
 class BasePerformanceMetrics(object):
+    epoch = datetime.datetime.utcfromtimestamp(0)
+
     def __init__(self, config):
         self.config = config
 
     def send_metrics(self, metrics, step=None):
-        timestamp = int(time.time())
+        timestamp = datetime.datetime.now()
         for k, v in metrics.items():
             self.log_metric(k, v, timestamp=timestamp, step=step)
 
     def log_metric(self, key, value, timestamp=None, step=None):
         """ learned from MLflow log_metrics"""
-        timestamp = timestamp if timestamp is not None else int(time.time())
+        timestamp = timestamp if timestamp is not None else datetime.datetime.now()
         step = step if step is not None else 0
 
         metric = Metric(key, value, timestamp, step)
@@ -53,7 +55,7 @@ class HttpPerformanceMetrics(BasePerformanceMetrics):
             'key': metric.key,
             'value': metric.value,
             'step': metric.step,
-            'timestamp': metric.timestamp
+            'timestamp': (metric.timestamp - self.epoch) / datetime.timedelta(microseconds=1)
         }
 
         r = requests.post(self.config['metrics_report_url'], json=data)
@@ -61,3 +63,9 @@ class HttpPerformanceMetrics(BasePerformanceMetrics):
 
 
 registry_performance_metrics_class('http', HttpPerformanceMetrics)
+
+
+def get_performance_metrics(config):
+    pm_class = get_performance_metrics_class(config)
+    pm = pm_class(config)
+    return pm
