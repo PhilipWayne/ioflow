@@ -1,5 +1,6 @@
 import functools
 import json
+import os
 
 import numpy as np
 
@@ -60,3 +61,8 @@ class DownloadCorpusProcessor(CorpusProcessorBase):
             "tags": np.loadtxt(self.config['tags'], dtype=np.unicode, encoding=None) if self.config.get('tags') else None,
             "labels": np.loadtxt(self.config['labels'], dtype=np.unicode, encoding=None) if self.config.get('labels') else None
         }
+
+
+def download_corpus_to_path(config, output_file):
+    corpus_file = corpus_download(config)
+    os.replace(corpus_file, output_file)
