@@ -6,10 +6,6 @@ from ioflow.performance_reporter.performance_reporter_base import \
 
 
 class DbPerformanceReporter(PerformanceReporterBase):
-    def send_performances(self, metrics):
-        for k, v in metrics.items():
-            self.log_performance(k, v)
-
     def log_performance(self, key, value):
         metric = Performance(key, value)
         self.post_performance(metric)
