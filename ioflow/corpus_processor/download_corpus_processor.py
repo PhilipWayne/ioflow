@@ -5,7 +5,6 @@ import os
 import numpy as np
 
 from ioflow.corpus_processor.corpus_processor_base import CorpusProcessorBase
-from ioflow.corpus import Corpus
 from ioflow.corpus_processor.download_file import download_file
 
 from tokenizer_tools.tagset.offset.sequence import Sequence
@@ -50,8 +49,8 @@ class DownloadCorpusProcessor(CorpusProcessorBase):
     def prepare(self):
         corpus_file = corpus_download(self.config)
 
-        self.dataset_mapping[Corpus.TRAIN] = functools.partial(generator_fn, corpus_file)
-        self.dataset_mapping[Corpus.EVAL] = functools.partial(generator_fn, corpus_file)
+        self.dataset_mapping[self.TRAIN] = functools.partial(generator_fn, corpus_file)
+        self.dataset_mapping[self.EVAL] = functools.partial(generator_fn, corpus_file)
 
     def get_generator_func(self, data_set):
         return self.dataset_mapping[data_set]

@@ -1,4 +1,3 @@
-from ioflow.corpus import Corpus
 from ioflow.corpus_processor.corpus_processor_base import CorpusProcessorBase
 
 
@@ -8,9 +7,9 @@ class RawCorpusProcessor(CorpusProcessorBase):
         self.dataset_mapping = {}
 
     def prepare(self):
-        self.dataset_mapping[Corpus.TRAIN] = self.config[
+        self.dataset_mapping[self.TRAIN] = self.config[
             'corpus_train_input_func']
-        self.dataset_mapping[Corpus.EVAL] = self.config[
+        self.dataset_mapping[self.EVAL] = self.config[
             'corpus_eval_input_func']
 
     def get_generator_func(self, data_set):

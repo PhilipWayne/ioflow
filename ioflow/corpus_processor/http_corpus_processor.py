@@ -9,7 +9,6 @@ from tokenizer_tools.tagset.offset.span_set import SpanSet
 from tokenizer_tools.tagset.offset.span import Span
 
 from ioflow.corpus_processor.corpus_processor_base import CorpusProcessorBase
-from ioflow.corpus import Corpus
 
 
 def parse(obj):
@@ -55,6 +54,7 @@ def run_then_cache_decorator(func):
     memo = None
     @functools.wraps(func)
     def wrapper(*args):
+        nonlocal memo
         if not memo:
             memo = func(*args)
         return memo
@@ -110,8 +110,8 @@ class HttpCorpusProcessor(CorpusProcessorBase):
         self.dataset_mapping = {}
 
     def prepare(self):
-        self.dataset_mapping[Corpus.TRAIN] = functools.partial(generator_fn, self.config)
-        self.dataset_mapping[Corpus.EVAL] = None
+        self.dataset_mapping[self.TRAIN] = functools.partial(generator_fn, self.config)
+        self.dataset_mapping[self.EVAL] = None
 
     def get_generator_func(self, data_set):
         return self.dataset_mapping[data_set]
@@ -129,7 +129,7 @@ if __name__ == "__main__":
 
     processor = HttpCorpusProcessor(config)
     processor.prepare()
-    gfunc = processor.get_generator_func(Corpus.TRAIN)
+    gfunc = processor.get_generator_func(processor.TRAIN)
 
     for i in gfunc():
         print(i)

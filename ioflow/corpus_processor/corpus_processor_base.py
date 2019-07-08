@@ -1,4 +1,7 @@
 class CorpusProcessorBase(object):
+    EVAL = 'eval'
+    TRAIN = 'train'
+
     def __init__(self, config):
         self.config = config
 

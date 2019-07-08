@@ -5,7 +5,6 @@ from tokenizer_tools.conllz.reader import read_conllz, read_conllx
 from tokenizer_tools.converter.conllz_to_offset import conllz_to_offset
 
 from ioflow.corpus_processor.corpus_processor_base import CorpusProcessorBase
-from ioflow.corpus import Corpus
 
 
 def generator_fn(input_file):
@@ -25,8 +24,8 @@ class LocalCorpusProcessor(CorpusProcessorBase):
         self.dataset_mapping = {}
 
     def prepare(self):
-        self.dataset_mapping[Corpus.TRAIN] = functools.partial(generator_fn, self.config['train'])
-        self.dataset_mapping[Corpus.EVAL] = functools.partial(generator_fn, self.config['test'])
+        self.dataset_mapping[self.TRAIN] = functools.partial(generator_fn, self.config['train'])
+        self.dataset_mapping[self.EVAL] = functools.partial(generator_fn, self.config['test'])
 
     def get_generator_func(self, data_set):
         return self.dataset_mapping[data_set]
