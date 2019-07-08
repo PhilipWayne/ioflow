@@ -8,6 +8,11 @@ def get_task_status_class(config):
     return task_status_registry[config.get('task_status_schema', 'raw')]
 
 
+def get_task_status(config):
+    task_status_class = get_task_status_class(config)
+    return task_status_class(config)
+
+
 def registry_task_status_class(schema, class_):
     task_status_registry[schema] = class_
 
