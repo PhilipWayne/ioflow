@@ -39,21 +39,33 @@ registry_task_status_class('raw', RawTaskStatus)
 
 
 class HttpTaskStatus(BaseTaskStatus):
-    def __init__(self, config):
-        self.DONE = 10
-        self.START = 1
+    DONE = 10
+    START = 1
 
+    START_DOWNLOAD_CORPUS = 2
+    START_PROCESS_CORPUS = 3
+    START_TRAIN = 4
+    START_TEST = 5
+    START_UPLOAD_MODEL = 6
+
+    CODE_TO_STR = {
+        DONE: 'done',
+        START: 'start',
+        START_DOWNLOAD_CORPUS: '下载语料',
+        START_PROCESS_CORPUS: '语料处理',
+        START_TRAIN: '训练',
+        START_TEST: '测试',
+        START_UPLOAD_MODEL: '模型上传'
+    }
+
+    def __init__(self, config):
         super().__init__(config)
 
     def send_status(self, status):
         print('{}:{}'.format(self.__class__, status))
 
-        code_to_str = {
-            self.DONE: 'done',
-            self.START: 'start'
-        }
-        if status in code_to_str:
-            data = {'progress': code_to_str[status]}
+        if status in self.CODE_TO_STR:
+            data = {'progress': self.CODE_TO_STR[status]}
         else:
             data = status
 
@@ -61,7 +73,7 @@ class HttpTaskStatus(BaseTaskStatus):
         json_data.update(data)
 
         r = requests.post(self.config['progress_report_url'], json=json_data)
-        assert r.status_code == 200
+        assert r.ok, r.content
 
 
 registry_task_status_class('http', HttpTaskStatus)
