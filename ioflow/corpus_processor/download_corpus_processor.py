@@ -42,24 +42,23 @@ def corpus_download(config):
 
 
 class DownloadCorpusProcessor(CorpusProcessorBase):
+    default_split_kwargs = {"train_size": 1.0}
+
     def __init__(self, config):
         super(DownloadCorpusProcessor, self).__init__(config)
-        self.dataset_mapping = {}
 
     def prepare(self):
         corpus_file = corpus_download(self.config)
 
-        self.dataset_mapping[self.TRAIN] = functools.partial(generator_fn, corpus_file)
-        self.dataset_mapping[self.EVAL] = functools.partial(generator_fn, corpus_file)
+        corpus_list = list(generator_fn(corpus_file))
 
-    def get_generator_func(self, data_set):
-        return self.dataset_mapping[data_set]
+        train_data, eval_data = self.train_test_split(corpus_list, **self.config.get('corpus_split_kwargs', self.default_split_kwargs))
 
-    def get_meta_info(self):
-        return {
-            "tags": np.loadtxt(self.config['tags'], dtype=np.unicode, encoding=None) if self.config.get('tags') else None,
-            "labels": np.loadtxt(self.config['labels'], dtype=np.unicode, encoding=None) if self.config.get('labels') else None
-        }
+        self.dataset_mapping[self.TRAIN] = train_data
+        self.dataset_mapping[self.EVAL] = eval_data
+
+        self.meta_info['tags'] = self.collect_tags(corpus_list)
+        self.meta_info['labels'] = self.collect_labels(corpus_list)
 
 
 def download_corpus_to_path(config, output_file):

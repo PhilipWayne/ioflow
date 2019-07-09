@@ -12,8 +12,4 @@ class RawCorpusProcessor(CorpusProcessorBase):
         self.dataset_mapping[self.EVAL] = self.config[
             'corpus_eval_input_func']
 
-    def get_generator_func(self, data_set):
-        return self.dataset_mapping[data_set]
-
-    def get_meta_info(self):
-        return self.config['corpus_meta_info']
+        self.meta_info = self.config['corpus_meta_info']

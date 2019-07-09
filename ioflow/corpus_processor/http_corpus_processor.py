@@ -107,17 +107,12 @@ def request_meta_data(config):
 class HttpCorpusProcessor(CorpusProcessorBase):
     def __init__(self, config):
         super(HttpCorpusProcessor, self).__init__(config)
-        self.dataset_mapping = {}
 
     def prepare(self):
         self.dataset_mapping[self.TRAIN] = functools.partial(generator_fn, self.config)
         self.dataset_mapping[self.EVAL] = None
 
-    def get_generator_func(self, data_set):
-        return self.dataset_mapping[data_set]
-
-    def get_meta_info(self):
-        return request_meta_data(self.config)
+        self.meta_info = request_meta_data(self.config)
 
 
 if __name__ == "__main__":

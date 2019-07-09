@@ -21,17 +21,12 @@ def generator_fn(input_file):
 class LocalCorpusProcessor(CorpusProcessorBase):
     def __init__(self, config):
         super(LocalCorpusProcessor, self).__init__(config)
-        self.dataset_mapping = {}
 
     def prepare(self):
         self.dataset_mapping[self.TRAIN] = functools.partial(generator_fn, self.config['train'])
         self.dataset_mapping[self.EVAL] = functools.partial(generator_fn, self.config['test'])
 
-    def get_generator_func(self, data_set):
-        return self.dataset_mapping[data_set]
-
-    def get_meta_info(self):
-        return {
+        self.meta_info = {
             "tags": np.loadtxt(self.config['tags'], dtype=np.unicode, encoding=None) if self.config.get('tags') else None,
             "labels": np.loadtxt(self.config['labels'], dtype=np.unicode, encoding=None) if self.config.get('labels') else None
         }
