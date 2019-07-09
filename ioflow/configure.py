@@ -54,3 +54,6 @@ def read_configure(return_empty=False) -> dict:
     #         'arch': {}
     #      }
     # }
+
+
+read_config = read_configure  # alias
