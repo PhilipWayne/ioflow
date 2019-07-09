@@ -54,8 +54,8 @@ class DownloadCorpusProcessor(CorpusProcessorBase):
 
         train_data, eval_data = self.train_test_split(corpus_list, **self.config.get('corpus_split_kwargs', self.default_split_kwargs))
 
-        self.dataset_mapping[self.TRAIN] = train_data
-        self.dataset_mapping[self.EVAL] = eval_data
+        self.dataset_mapping[self.TRAIN] = lambda: train_data
+        self.dataset_mapping[self.EVAL] = lambda: eval_data
 
         self.meta_info['tags'] = self.collect_tags(corpus_list)
         self.meta_info['labels'] = self.collect_labels(corpus_list)
