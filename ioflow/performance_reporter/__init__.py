@@ -1,5 +1,7 @@
 from ioflow.performance_reporter.db_performance_reporter import \
     DbPerformanceReporter
+from ioflow.performance_reporter.performance_reporter_base import \
+    PerformanceReporterBase
 from ioflow.performance_reporter.raw_performance_reporter import \
     RawPerformanceReporter
 
@@ -10,7 +12,7 @@ def get_performance_reporter_class(config):
     return performance_reporter_registry[config.get('performance_reporter_schema', 'raw')]
 
 
-def get_performance_reporter(config):
+def get_performance_reporter(config) -> PerformanceReporterBase:
     task_status_class = get_performance_reporter_class(config)
     return task_status_class(config)
 
