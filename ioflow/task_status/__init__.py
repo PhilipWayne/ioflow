@@ -8,7 +8,7 @@ def get_task_status_class(config):
     return task_status_registry[config.get('task_status_schema', 'raw')]
 
 
-def get_task_status(config):
+def get_task_status(config) -> 'BaseTaskStatus':
     task_status_class = get_task_status_class(config)
     return task_status_class(config)
 
@@ -24,6 +24,9 @@ class BaseTaskStatus(object):
     def send_status(self, status):
         raise NotImplementedError
 
+    def send_progress(self, progress):
+        raise NotImplementedError
+
 
 class RawTaskStatus(BaseTaskStatus):
     def __init__(self, config):
@@ -32,7 +35,10 @@ class RawTaskStatus(BaseTaskStatus):
         super().__init__(config)
 
     def send_status(self, status):
-        print('{}:{}'.format(self.__class__, status))
+        print('[{}] status: {}'.format(self.__class__, status))
+
+    def send_progress(self, progress):
+        print('[{}]: progress: {}'.format(self.__class__, progress))
 
 
 registry_task_status_class('raw', RawTaskStatus)
@@ -61,14 +67,22 @@ class HttpTaskStatus(BaseTaskStatus):
     def __init__(self, config):
         super().__init__(config)
 
+    def send_progress(self, progress):
+        data = {'trainProgress': str(progress)}
+
+        self._send_request(data)
+
     def send_status(self, status):
         print('{}:{}'.format(self.__class__, status))
 
         if status in self.CODE_TO_STR:
-            data = {'progress': self.CODE_TO_STR[status]}
+            data = {'stepProgress': self.CODE_TO_STR[status]}
         else:
             data = status
 
+        self._send_request(data)
+
+    def _send_request(self, data):
         json_data = {'id': self.config['task_id']}
         json_data.update(data)
 
