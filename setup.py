@@ -14,5 +14,6 @@ setup(
     author='Xiaoquan Kong',
     author_email='u1mail2me@gmail.com',
     description='Input/Output abstraction layer for machine learning',
-    install_requires=['numpy', 'requests', 'flask', 'scikit-learn']
+    install_requires=['numpy', 'requests', 'flask', 'scikit-learn',
+                      'jsonlines']
 )
