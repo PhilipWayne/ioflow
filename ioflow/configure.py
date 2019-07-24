@@ -1,4 +1,6 @@
 import json
+
+from pconf import Pconf
 import os
 
 
@@ -33,12 +35,18 @@ def read_configure(return_empty=False) -> dict:
         return {}
 
     active_configure_file = os.getenv('_DEFAULT_CONFIG_FILE', './configure.json')
+    builtin_configure_file = os.getenv('_BUILTIN_CONFIG_FILE', './builtin_configure.json')
 
-    active_configure = read_json_file(active_configure_file)
+    # Pconf.env()
+    Pconf.file(active_configure_file, encoding='json')
+    Pconf.file(builtin_configure_file, encoding='json')
 
-    print(active_configure)
+    # Get all the config values parsed from the sources
+    config = Pconf.get()
 
-    return active_configure
+    print(config)
+
+    return config
 
     # sys.exit(0)
 
