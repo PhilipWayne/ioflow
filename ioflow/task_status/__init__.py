@@ -34,6 +34,9 @@ class RawTaskStatus(BaseTaskStatus):
         self.START = 1
         super().__init__(config)
 
+    def __getattr__(self, name):
+        return str(name).lower()
+
     def send_status(self, status):
         print('[{}] status: {}'.format(self.__class__, status))
 

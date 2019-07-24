@@ -19,11 +19,11 @@ class DbRequestData(dict):
 
     @classmethod
     def from_offset_corpus(cls, offset_corpus: Sequence):
-        self = cls()
+        self_instance = cls()
 
-        self['_id'] = offset_corpus.id
-        self['text'] = offset_corpus.text
-        self['annotations'] = []
+        self_instance['_id'] = offset_corpus.id
+        self_instance['text'] = offset_corpus.text
+        self_instance['annotations'] = []
 
         entities = []
         for span in offset_corpus.span_set:
@@ -36,12 +36,14 @@ class DbRequestData(dict):
 
             entities.append(entity)
 
-        self['annotations'] = [
+        self_instance['annotations'] = [
             {
                 "labels_type": "slot",
                 "entities": entities
             }
         ]
+
+        return self_instance
 
     def to_json_lines(self):
         return json.dumps(self)
@@ -90,6 +92,10 @@ class RemoteFileEvalReporter(BaseEvalReporter):
         self.y_list = []
 
     def record_x_and_y(self, x, y):
+        if isinstance(x, Sequence):
+            db_data = DbRequestData.from_offset_corpus(x)
+            x = db_data.to_json_lines()
+
         self.x_list.append(x)
         self.y_list.append(y)
 
