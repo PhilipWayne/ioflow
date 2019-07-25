@@ -16,5 +16,5 @@ setup(
     description='Input/Output abstraction layer for machine learning',
     install_requires=['numpy', 'requests', 'flask', 'scikit-learn',
                       'jsonlines', 'pconf', 'tokenizer_tools'],
-    tests_require=['requests-mock']
+    tests_require=['requests-mock', 'pytest']
 )
