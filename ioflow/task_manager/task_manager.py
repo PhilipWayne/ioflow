@@ -7,7 +7,7 @@ from ioflow.task_manager.task_manager_base import TaskManagerBase
 
 
 class TaskManager(TaskManagerBase):
-    def __init__(self, status_controller: StatusControllerBase, *args, **kwargs):
+    def __init__(self, *args, **kwargs):
         pause_event = Event()
         pause_event.set()
 
@@ -16,10 +16,6 @@ class TaskManager(TaskManagerBase):
 
         self.pause_event = pause_event
         self.stop_event = stop_event
-
-        t = Thread(target=functools.partial(status_controller, pause_event, stop_event))
-        t.setDaemon(True)
-        t.start()
 
         super().__init__()
 
