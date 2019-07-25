@@ -10,19 +10,39 @@ from ioflow.corpus_processor.download_file import download_file
 from tokenizer_tools.tagset.offset.sequence import Sequence
 from tokenizer_tools.tagset.offset.span import Span
 
+# # std corpus format
+# def parse_corpus_to_offset(corpus_item):
+#     print(corpus_item)
+#     seq = Sequence(corpus_item['text'], label=corpus_item['classifications']['intent'], id=corpus_item['id'])
+#     for entity in corpus_item['annotations']['entity']:
+#         span = Span(
+#             int(entity['start']), int(entity['start']) + int(entity['length']),
+#             entity['type']
+#         )
+#
+#         # get value which is not in corpus_item object
+#         span.fill_text(corpus_item['text'])
+#
+#         seq.span_set.append(span)
+#
+#     return seq
 
+# real corpus format
 def parse_corpus_to_offset(corpus_item):
-    seq = Sequence(corpus_item['text'], label=corpus_item['classifications']['intent'], id=corpus_item['id'])
-    for entity in corpus_item['annotations']['entity']:
-        span = Span(
-            int(entity['start']), int(entity['start']) + int(entity['length']),
-            entity['type']
-        )
+    print(corpus_item)
+    seq = Sequence([i for i in corpus_item['text']], label=None, id=corpus_item['_id'])
+    for annot in corpus_item['annotations']:
+        if annot['labels_type'] != 'slot':
+            continue
 
-        # get value which is not in corpus_item object
-        span.fill_text(corpus_item['text'])
+        for entity in annot['entities']:
+            span = Span(
+                int(entity['start_index']), int(entity['start_index']) + int(entity['slot_len']),
+                entity['slot_type'],
+                entity['slot_value']
+            )
 
-        seq.span_set.append(span)
+            seq.span_set.append(span)
 
     return seq
 

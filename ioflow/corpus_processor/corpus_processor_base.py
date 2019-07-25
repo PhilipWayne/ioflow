@@ -1,5 +1,5 @@
 import numpy as np
-import sklearn
+from sklearn.model_selection import train_test_split
 
 from tokenizer_tools.tagset.offset.sequence import Sequence
 from typing import List
@@ -20,7 +20,7 @@ class CorpusProcessorBase(object):
     def train_test_split(self, *args, **kwargs):
         # go to https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.train_test_split.html
         # for *args and **kwargs
-        return sklearn.model_selection.train_test_split(*args, **kwargs)
+        return train_test_split(*args, **kwargs)
 
     def get_generator_func(self, data_set):
         return self.dataset_mapping[data_set]
@@ -34,9 +34,9 @@ class CorpusProcessorBase(object):
             for span in corpus.span_set:
                 tag_list.append(span.entity)
 
-        return np.array(set(tag_list))
+        return set(tag_list)
 
     def collect_labels(self, corpus_list):
         label_list = [i.label for i in corpus_list]
 
-        return np.array(set(label_list))
+        return set(label_list)

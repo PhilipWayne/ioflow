@@ -22,3 +22,6 @@ registry_corpus_processor_class('local', LocalCorpusProcessor)
 
 from ioflow.corpus_processor.http_corpus_processor import HttpCorpusProcessor
 registry_corpus_processor_class('http', HttpCorpusProcessor)
+
+from ioflow.corpus_processor.download_corpus_processor import DownloadCorpusProcessor
+registry_corpus_processor_class('remote_file', DownloadCorpusProcessor)
