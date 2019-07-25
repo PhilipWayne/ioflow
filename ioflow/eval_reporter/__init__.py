@@ -21,7 +21,9 @@ class DbRequestData(dict):
     def from_offset_corpus(cls, offset_corpus: Sequence):
         self_instance = cls()
 
-        self_instance['_id'] = offset_corpus.id
+        # Notice: id of a Sequence object maybe is a UUID object,
+        # hence need use str() convert string
+        self_instance['_id'] = str(offset_corpus.id)
         self_instance['text'] = offset_corpus.text
         self_instance['annotations'] = []
 
@@ -44,9 +46,6 @@ class DbRequestData(dict):
         ]
 
         return self_instance
-
-    def to_json_lines(self):
-        return json.dumps(self)
 
 
 eval_reporter_mapping = {}
@@ -93,8 +92,7 @@ class RemoteFileEvalReporter(BaseEvalReporter):
 
     def record_x_and_y(self, x, y):
         if isinstance(x, Sequence):
-            db_data = DbRequestData.from_offset_corpus(x)
-            x = db_data.to_json_lines()
+            x = DbRequestData.from_offset_corpus(x)
 
         self.x_list.append(x)
         self.y_list.append(y)
