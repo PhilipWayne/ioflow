@@ -77,7 +77,7 @@ class BaseEvalReporter:
 
 class RawEvalReporter(BaseEvalReporter):
     def record_x_and_y(self, x, y):
-        print(x, y)
+        print("<{}>:\n\tx:{};\n\ty:{}".format(self.__class__, x, y))
 
     def submit(self):
         pass
