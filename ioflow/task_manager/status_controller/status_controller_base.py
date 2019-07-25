@@ -1,5 +1,5 @@
 class StatusControllerBase(object):
-    PAUSE = 'pause'
+    PAUSE = 'suspend'
     CONTINUE = 'continue'
     STOP = 'stop'
 
