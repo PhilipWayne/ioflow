@@ -27,15 +27,18 @@ def read_json_file(json_file):
             return data
 
 
-def read_configure(return_empty=False) -> dict:
+def read_configure(
+        return_empty=False,
+        default_configure='./configure.json',
+        builtin_configure='./builtin_configure.json') -> dict:
     # set return_empty to True for not read config from env
     # which can prevent unexpected result
     # e.g. './configure.json' is not for this app, but for other using
     if return_empty:
         return {}
 
-    active_configure_file = os.getenv('_DEFAULT_CONFIG_FILE', './configure.json')
-    builtin_configure_file = os.getenv('_BUILTIN_CONFIG_FILE', './builtin_configure.json')
+    active_configure_file = os.getenv('_DEFAULT_CONFIG_FILE', default_configure)
+    builtin_configure_file = os.getenv('_BUILTIN_CONFIG_FILE', builtin_configure)
 
     # disable read configure from environment
     # Pconf.env()
