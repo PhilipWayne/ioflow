@@ -37,9 +37,17 @@ def read_configure(return_empty=False) -> dict:
     active_configure_file = os.getenv('_DEFAULT_CONFIG_FILE', './configure.json')
     builtin_configure_file = os.getenv('_BUILTIN_CONFIG_FILE', './builtin_configure.json')
 
+    # disable read configure from environment
     # Pconf.env()
+
     Pconf.file(active_configure_file, encoding='json')
-    Pconf.file(builtin_configure_file, encoding='json')
+
+    # try loading builtin configure file
+    if os.path.exists(builtin_configure_file):
+        print("loading builtin configure from {}".format(builtin_configure_file))
+        Pconf.file(builtin_configure_file, encoding='json')
+    else:
+        print(">>> builtin configure file is not found!")
 
     # Get all the config values parsed from the sources
     config = Pconf.get()
