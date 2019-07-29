@@ -24,7 +24,7 @@ class DbRequestData(dict):
         # Notice: id of a Sequence object maybe is a UUID object,
         # hence need use str() convert string
         self_instance['_id'] = str(offset_corpus.id)
-        self_instance['text'] = offset_corpus.text
+        self_instance['text'] = "".join(offset_corpus.text)
         self_instance['annotations'] = []
 
         entities = []
