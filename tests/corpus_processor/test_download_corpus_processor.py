@@ -1,12 +1,12 @@
 import io
 
 from ioflow.corpus_processor.download_corpus_processor import (
-    parse_corpus_to_offset,
-    generator_fn
-)
+    parse_std_corpus_to_offset,
+    generator_fn,
+    parse_corpus_to_offset)
 
 
-def test_parse_corpus_to_offset():
+def test_parse_std_corpus_to_offset():
     test_input = {
         "id": "5d11c0344420bb1e20078fd9",
         "annotations": {
@@ -28,6 +28,44 @@ def test_parse_corpus_to_offset():
             "intent": "PLAY_SONG",
             "domain": "yyy"
         }
+    }
+
+    result = parse_std_corpus_to_offset(test_input)
+
+    gold_result_str = "Sequence(text='周杰伦的七里香', span_set=SpanSet([Span(0, 3, '人名', value='周杰伦', normal_value=None), Span(4, 7, '歌曲', value='七里香', normal_value=None)]), id='5d11c0344420bb1e20078fd9', label='PLAY_SONG')"
+
+    assert str(result) == gold_result_str
+
+
+def test_parse_corpus_to_offset():
+    return None
+    test_input = {
+        "_id": "5cff6f124f43a05bf437c09c",
+        "text_id": "ae1188f49ef4d855183aa60ce4d9b5fa",
+        "editor": "quanlin",
+        "time_stamp": "2019-06-11 16:47:40",
+        "annotations": [
+            {
+                "labels_type": "slot",
+                "time_stamp": "2019-06-11 16:48:04",
+                "slot_num": 1,
+                "entities": [
+                    {
+                        "start_index": 8,
+                        "slot_len": 2,
+                        "slot_type": "唤醒词名",
+                        "slot_value": "大白"
+                    }
+                ],
+                "label_name": "slot",
+                "label_id": "5ceb6a314420bb3e18596e58",
+                "is_delete": False
+            }
+        ],
+        "text": "改个唤醒词",
+        "is_delete": False,
+        "name": "collection1",
+        "label_id": "5ceb6a314420bb3e18596e57"
     }
 
     result = parse_corpus_to_offset(test_input)
