@@ -6,7 +6,7 @@ task_status_registry = {}
 
 
 def get_task_status_class(config):
-    return task_status_registry[config.get('task_status_schema', 'raw')]
+    return task_status_registry[config.get('task_status_schema', 'local')]
 
 
 def get_task_status(config) -> 'BaseTaskStatus':

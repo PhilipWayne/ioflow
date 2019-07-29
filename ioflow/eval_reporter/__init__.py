@@ -56,10 +56,10 @@ def registry_eval_reporter_class(data_source_scheme, corpus_processor_class):
 
 
 def get_eval_reporter_class(config):
-    return eval_reporter_mapping[config.get('eval_reporter_scheme', 'raw')]
+    return eval_reporter_mapping[config.get('eval_reporter_scheme', 'local')]
 
 
-def get_eval_reporter(config):
+def get_eval_reporter(config) -> 'BaseEvalReporter':
     eval_reporter_class = get_eval_reporter_class(config)
     return eval_reporter_class(config)
 

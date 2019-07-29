@@ -10,7 +10,7 @@ def get_corpus_processor_class(data_source_scheme):
 
 
 def get_corpus_processor(config):
-    corpus_processor_class = get_corpus_processor_class(config.get('data_source_scheme', 'raw'))
+    corpus_processor_class = get_corpus_processor_class(config.get('data_source_scheme', 'local'))
     return corpus_processor_class(config)
 
 

@@ -8,7 +8,7 @@ task_status_registry = {}
 
 
 def get_performance_metrics_class(config):
-    return task_status_registry[config.get('metrics_report_scheme', 'raw')]
+    return task_status_registry[config.get('metrics_report_scheme', 'local')]
 
 
 def registry_performance_metrics_class(schema, class_):

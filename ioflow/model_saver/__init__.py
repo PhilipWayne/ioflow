@@ -6,7 +6,7 @@ def registry_model_saver_class(data_source_scheme, corpus_processor_class):
 
 
 def get_model_saver_class(config):
-    return model_saver_mapping[config.get('model_saver_scheme', 'raw')]
+    return model_saver_mapping[config.get('model_saver_scheme', 'local')]
 
 
 def get_model_saver(config):

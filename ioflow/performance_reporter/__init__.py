@@ -9,7 +9,7 @@ performance_reporter_registry = {}
 
 
 def get_performance_reporter_class(config):
-    return performance_reporter_registry[config.get('performance_reporter_schema', 'raw')]
+    return performance_reporter_registry[config.get('performance_reporter_schema', 'local')]
 
 
 def get_performance_reporter(config) -> PerformanceReporterBase:
