@@ -14,8 +14,8 @@ def get_model_saver(config):
     return model_saver_class(config)
 
 
-from ioflow.model_saver.raw_model_saver import RawModelSaver
-registry_model_saver_class('raw', RawModelSaver)
+from ioflow.model_saver.local_model_saver import LocalModelSaver
+registry_model_saver_class('local', LocalModelSaver)
 
 from ioflow.model_saver.http_based_model_saver import HttpBasedModelSaver
 registry_model_saver_class('http', HttpBasedModelSaver)

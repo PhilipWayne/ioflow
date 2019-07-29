@@ -1,6 +1,7 @@
 import functools
 import json
 import os
+import logging
 
 import numpy as np
 
@@ -9,6 +10,8 @@ from ioflow.corpus_processor.download_file import download_file
 
 from tokenizer_tools.tagset.offset.sequence import Sequence
 from tokenizer_tools.tagset.offset.span import Span
+
+logger = logging.getLogger(__name__)
 
 # # std corpus format
 # def parse_corpus_to_offset(corpus_item):
@@ -29,7 +32,7 @@ from tokenizer_tools.tagset.offset.span import Span
 
 # real corpus format
 def parse_corpus_to_offset(corpus_item):
-    print(corpus_item)
+    logger.debug(corpus_item)
     seq = Sequence([i for i in corpus_item['text']], label=None, id=corpus_item['_id'])
     for annot in corpus_item['annotations']:
         if annot['labels_type'] != 'slot':

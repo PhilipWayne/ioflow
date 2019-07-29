@@ -1,5 +1,6 @@
 import requests
 
+from ioflow.utils import log_call
 
 task_status_registry = {}
 
@@ -28,7 +29,23 @@ class BaseTaskStatus(object):
         raise NotImplementedError
 
 
-class RawTaskStatus(BaseTaskStatus):
+class TaskStatus(BaseTaskStatus):
+    @log_call
+    def send_status(self, status):
+        return self.do_send_status(status)
+
+    def do_send_status(self, status):
+        raise NotImplementedError
+
+    @log_call
+    def send_progress(self, progress):
+        return self.do_send_progress(progress)
+
+    def do_send_progress(self, progress):
+        raise NotImplementedError
+
+
+class LocalTaskStatus(TaskStatus):
     def __init__(self, config):
         self.DONE = 10
         self.START = 1
@@ -37,17 +54,19 @@ class RawTaskStatus(BaseTaskStatus):
     def __getattr__(self, name):
         return str(name).lower()
 
-    def send_status(self, status):
-        print('[{}] status: {}'.format(self.__class__, status))
+    def do_send_status(self, status):
+        # print('[{}] status: {}'.format(self.__class__, status))
+        pass
 
-    def send_progress(self, progress):
-        print('[{}]: progress: {}'.format(self.__class__, progress))
+    def do_send_progress(self, progress):
+        # print('[{}]: progress: {}'.format(self.__class__, progress))
+        pass
 
 
-registry_task_status_class('raw', RawTaskStatus)
+registry_task_status_class('local', LocalTaskStatus)
 
 
-class HttpTaskStatus(BaseTaskStatus):
+class HttpTaskStatus(TaskStatus):
     DONE = 10
     START = 1
 
@@ -70,12 +89,12 @@ class HttpTaskStatus(BaseTaskStatus):
     def __init__(self, config):
         super().__init__(config)
 
-    def send_progress(self, progress):
+    def do_send_progress(self, progress):
         data = {'trainProgress': str(progress)}
 
         self._send_request(data)
 
-    def send_status(self, status):
+    def do_send_status(self, status):
         print('{}:{}'.format(self.__class__, status))
 
         if status in self.CODE_TO_STR:

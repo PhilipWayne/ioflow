@@ -2,8 +2,8 @@ from ioflow.performance_reporter.db_performance_reporter import \
     DbPerformanceReporter
 from ioflow.performance_reporter.performance_reporter_base import \
     PerformanceReporterBase
-from ioflow.performance_reporter.raw_performance_reporter import \
-    RawPerformanceReporter
+from ioflow.performance_reporter.local_performance_reporter import \
+    LocalPerformanceReporter
 
 performance_reporter_registry = {}
 
@@ -23,4 +23,4 @@ def registry_performance_reporter_class(schema, class_):
 
 registry_performance_reporter_class('http', DbPerformanceReporter)
 
-registry_performance_reporter_class('raw', RawPerformanceReporter)
+registry_performance_reporter_class('local', LocalPerformanceReporter)

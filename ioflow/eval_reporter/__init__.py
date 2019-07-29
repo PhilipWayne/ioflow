@@ -75,7 +75,7 @@ class BaseEvalReporter:
         raise NotImplementedError
 
 
-class RawEvalReporter(BaseEvalReporter):
+class LocalEvalReporter(BaseEvalReporter):
     def record_x_and_y(self, x, y):
         print("<{}>:\n\tx:{};\n\ty:{}".format(self.__class__, x, y))
 
@@ -136,5 +136,5 @@ class RemoteFileEvalReporter(BaseEvalReporter):
         assert r.ok, r.content
 
 
-registry_eval_reporter_class('raw', RawEvalReporter)
+registry_eval_reporter_class('local', LocalEvalReporter)
 registry_eval_reporter_class('http', RemoteFileEvalReporter)

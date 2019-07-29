@@ -38,14 +38,14 @@ class BasePerformanceMetrics(object):
         raise NotImplementedError
 
 
-class RawPerformanceMetrics(BasePerformanceMetrics):
+class LocalPerformanceMetrics(BasePerformanceMetrics):
     def post_metric(self, metric):
         print('[{}]{}: {} => {}'.format(
             self.config['task_id'],
             metric.timestamp, metric.key, metric.value))
 
 
-registry_performance_metrics_class('raw', RawPerformanceMetrics)
+registry_performance_metrics_class('local', LocalPerformanceMetrics)
 
 
 class HttpPerformanceMetrics(BasePerformanceMetrics):
