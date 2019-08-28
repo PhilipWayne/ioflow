@@ -27,6 +27,6 @@ class LocalCorpusProcessor(CorpusProcessorBase):
         self.dataset_mapping[self.EVAL] = functools.partial(generator_fn, self.config['test'])
 
         self.meta_info = {
-            "tags": np.loadtxt(self.config['tags'], dtype=np.unicode, encoding=None) if self.config.get('tags') else None,
-            "labels": np.loadtxt(self.config['labels'], dtype=np.unicode, encoding=None) if self.config.get('labels') else None
+            "tags": np.loadtxt(self.config['tags'], dtype=np.unicode, encoding=None).tolist() if self.config.get('tags') else None,
+            "labels": np.loadtxt(self.config['labels'], dtype=np.unicode, encoding=None).tolist() if self.config.get('labels') else None
         }
