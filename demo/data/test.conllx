@@ -1,0 +1,80 @@
+#	{"label": "QUERY", "domain": "X-domain", "id": "f2d84908-9f33-459c-bd77-48a8c894605b"}
+介	O
+绍	O
+一	O
+下	O
+尖	B-X
+锐	I-X
+湿	I-X
+疣	L-X
+
+#	{"label": "QUERY", "domain": "X-domain", "id": "569acc40-ba4a-4542-9858-3e4daab6e373"}
+馒	B-X
+头	L-X
+怎	O
+么	O
+做	O
+吗	O
+？	O
+
+#	{"label": "LAUNCH", "domain": "X-domain", "id": "34586bc3-de12-4825-91b7-0833b29239ea"}
+打	O
+开	O
+语	B-X
+音	L-X
+软	O
+件	O
+
+#	{"label": "QUERY", "domain": "X-domain", "id": "1a521722-806d-4e2a-bea9-415442101a46"}
+列	O
+车	O
+深	B-X
+圳	L-X
+到	O
+广	B-X
+州	L-X
+
+#	{"label": "QUERY", "domain": "Y-domain", "id": "d8e11319-4b87-460a-af32-0a528591768f"}
+同	B-Y
+是	I-Y
+天	I-Y
+涯	I-Y
+沦	I-Y
+落	I-Y
+人	L-Y
+下	B-Y
+一	I-Y
+句	L-Y
+。	O
+
+#	{"label": "TRANSLATION", "domain": "Y-domain", "id": "abc70ab4-b56a-4917-859f-03de4cebad31"}
+我	B-Y
+想	I-Y
+打	I-Y
+你	L-Y
+英	B-Y
+语	L-Y
+怎	O
+么	O
+说	O
+
+#	{"label": "ROUTE", "domain": "Y-domain", "id": "6c2cd673-e381-4997-aaff-15905a561ac1"}
+帮	O
+我	O
+看	O
+一	O
+下	O
+到	O
+科	B-Y
+大	I-Y
+讯	I-Y
+飞	L-Y
+最	O
+快	O
+的	O
+是	O
+哪	O
+条	O
+路	O
+线	O
+

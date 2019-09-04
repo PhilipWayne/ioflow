@@ -1,0 +1,77 @@
+#	{"label": "QUERY", "domain": "X-domain", "id": "208b733d-a3ac-4bbb-926f-d16dc8ab5f03"}
+小	O
+猪	O
+哨	O
+糖	B-X
+醋	I-X
+排	I-X
+骨	L-X
+的	O
+做	O
+法	O
+。	O
+
+#	{"label": "PLAY", "domain": "X-domain", "id": "1605255a-e78e-4487-97b5-ee799d72c464"}
+来	O
+首	O
+出	B-X
+师	I-X
+表	L-X
+
+#	{"label": "QUERY", "domain": "X-domain", "id": "be0cfe1b-3e0a-4643-a9db-7fef69679fe7"}
+唐	U-X
+代	O
+诗	O
+人	O
+李	B-X
+白	L-X
+。	O
+
+#	{"label": "QUERY", "domain": "X-domain", "id": "87739f1e-2eea-4df6-b59b-126fb82a664d"}
+文	B-X
+娱	I-X
+播	I-X
+报	L-X
+
+#	{"label": "QUERY", "domain": "Y-domain", "id": "e4af56dc-a926-4951-a2d6-44956a9d25a5"}
+古	B-Y
+墓	I-Y
+丽	I-Y
+影	L-Y
+
+#	{"label": "TRANSLATION", "domain": "Y-domain", "id": "3d1c2067-199c-4756-9856-536c548d3513"}
+智	B-Y
+能	I-Y
+手	I-Y
+机	L-Y
+英	B-Y
+语	L-Y
+怎	O
+么	O
+说	O
+
+#	{"label": "PLAY", "domain": "Y-domain", "id": "f08e9327-5b40-4332-a171-bd5159b59482"}
+来	O
+首	O
+快	B-Y
+乐	I-Y
+崇	I-Y
+拜	L-Y
+
+#	{"label": "ROUTE", "domain": "Y-domain", "id": "9a8700a6-927a-46a3-abe2-719579fe8623"}
+南	B-Y
+光	I-Y
+集	I-Y
+团	L-Y
+怎	O
+么	O
+走	O
+
+#	{"label": "SEND", "domain": "Y-domain", "id": "fc377818-199f-4210-a8b4-942236a80ddb"}
+发	O
+信	O
+息	O
+给	O
+熊	B-Y
+伟	L-Y
+
