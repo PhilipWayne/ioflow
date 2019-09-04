@@ -1,3 +1,5 @@
+import pprint
+
 from pconf import Pconf
 import os
 
@@ -35,7 +37,8 @@ def read_configure(
     # Get all the config values parsed from the sources
     config = Pconf.get()
 
-    print(config)
+    print("++" * 8, "configure", "++" * 8)
+    pprint.pprint(config)
 
     return config
 
