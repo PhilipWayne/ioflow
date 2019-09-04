@@ -1,30 +1,7 @@
-import json
-
 from pconf import Pconf
 import os
 
-
-def read_json_file(json_file):
-    # TODO: implementation is ugly, using extendable way
-    config_format = os.environ.get('IOFLOW_CFG_FORMAT', 'raw')
-
-    if not os.path.exists(json_file):
-        return None
-
-    if config_format == 'raw':
-        with open(json_file) as fd:
-            return json.load(fd)
-    elif config_format == 'ecarx':
-        with open(json_file) as fd:
-            raw_data = json.load(fd)
-            data = raw_data['data']['params']
-
-            # inject task_id
-            data['task_id'] = raw_data['data']['_id']
-            # set data source scheme
-            data['data_source_scheme'] = 'http'
-
-            return data
+from ioflow.configure.get_configure_path_from_argv import get_configure_path_from_argv
 
 
 def read_configure(
@@ -37,7 +14,10 @@ def read_configure(
     if return_empty:
         return {}
 
-    active_configure_file = os.getenv('_DEFAULT_CONFIG_FILE', default_configure)
+    active_configure_file = get_configure_path_from_argv()
+    if not active_configure_file:
+        active_configure_file = os.getenv('_DEFAULT_CONFIG_FILE', default_configure)
+
     builtin_configure_file = os.getenv('_BUILTIN_CONFIG_FILE', builtin_configure)
 
     # disable read configure from environment
