@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup(
     name='ioflow',
-    version='0.6.1',
+    version='0.6.2',
     packages=setuptools.find_packages(),
     setup_requires=[
         'tensorflow',
