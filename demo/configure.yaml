@@ -1,0 +1,23 @@
+data_source_scheme: local
+train: "./demo/data/train.conllx"
+test: "./demo/data/test.conllx"
+tags: "./demo/data/entity.txt"
+constraint: "./demo/data/constraint.json"
+intent_field: domain
+shuffle_pool_size: 1000
+batch_size: 512
+epochs: 1
+max_steps: 
+max_steps_without_increase: 15000
+embedding_vocabulary_size: 128003
+embedding_dim: 300
+lstm_size: 100
+learning_rate: 
+result_dir: "./results"
+params_log_file: "./demo/results/params.json"
+model_dir: "./demo/results/model_dir"
+saved_model_dir: "./demo/results/saved_model"
+summary_log_dir: "./demo/results/summary_log_dir"
+save_checkpoints_secs: 60
+throttle_secs: 60
+"task_id": "ABC123"
