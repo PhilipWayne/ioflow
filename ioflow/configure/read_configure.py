@@ -22,7 +22,7 @@ def find_best_file_candidate(candidate_list):
         if os.path.exists(candidate):
             return candidate
 
-        return None
+    return None
 
 
 def read_configure(return_empty=False) -> dict:
