@@ -35,7 +35,7 @@ if not is_tensorflow_installed():
 
 setup(
     name="ioflow",
-    version="0.7.2",
+    version="0.7.3",
     packages=setuptools.find_packages(),
     url="https://github.com/howl-anderson/ioflow",
     license="Apache 2.0",
