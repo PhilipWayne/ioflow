@@ -44,14 +44,23 @@ def read_configure(return_empty=False) -> dict:
 
     builtin_configure_file = os.getenv("_BUILTIN_CONFIG_FILE", builtin_configure)
 
+    # Note: this is a safeguard, before using any Pconf function, do execute this
+    # In case former Pconf usage influence current usage
+    # which will lead to a hidden and wired bug
+    Pconf.clear()
+
     # disable read configure from environment
     # Pconf.env()
+
+    active_configure_file_abs_path = os.path.realpath(active_configure_file)
 
     if not os.path.exists(active_configure_file):
         print(">>> default configure file is not found!")
         raise ValueError("default configure file is not found!")
+    else:
+        print(">>> Using configure read from file: {}".format(active_configure_file_abs_path))
 
-    file_encoding = guess_configure_file_type(active_configure_file)
+    file_encoding = guess_configure_file_type(active_configure_file_abs_path)
     Pconf.file(active_configure_file, file_encoding)
 
     # try loading builtin configure file
@@ -64,6 +73,9 @@ def read_configure(return_empty=False) -> dict:
 
     # Get all the config values parsed from the sources
     config = Pconf.get()
+
+    # NOTE: clean Pconf for later brand new use
+    Pconf.clear()
 
     print("++" * 8, "configure", "++" * 8)
     pprint.pprint(config)
