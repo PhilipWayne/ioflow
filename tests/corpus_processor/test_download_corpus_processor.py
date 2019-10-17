@@ -32,7 +32,7 @@ def test_parse_std_corpus_to_offset():
 
     result = parse_std_corpus_to_offset(test_input)
 
-    gold_result_str = "Sequence(text='周杰伦的七里香', span_set=SpanSet([Span(0, 3, '人名', value='周杰伦', normal_value=None), Span(4, 7, '歌曲', value='七里香', normal_value=None)]), id='5d11c0344420bb1e20078fd9', label='PLAY_SONG')"
+    gold_result_str = "Sequence(text='周杰伦的七里香', span_set=SpanSet([Span(0, 3, '人名', value='周杰伦', normal_value=None), Span(4, 7, '歌曲', value='七里香', normal_value=None)]), id='5d11c0344420bb1e20078fd9', label='PLAY_SONG', extra_attr={})"
 
     assert str(result) == gold_result_str
 
