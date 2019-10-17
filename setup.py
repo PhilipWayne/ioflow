@@ -43,5 +43,5 @@ setup(
     author_email="u1mail2me@gmail.com",
     description="Input/Output abstraction layer for machine learning",
     install_requires=install_requires,
-    tests_require=["requests-mock", "pytest"],
+    tests_require=["requests-mock", "pytest", "pytest-datadir"],
 )

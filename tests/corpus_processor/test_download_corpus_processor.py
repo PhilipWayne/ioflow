@@ -38,7 +38,9 @@ def test_parse_std_corpus_to_offset():
 
 
 def test_parse_corpus_to_offset():
+    # TODO(howl-anderson): disable this test case
     return None
+
     test_input = {
         "_id": "5cff6f124f43a05bf437c09c",
         "text_id": "ae1188f49ef4d855183aa60ce4d9b5fa",
