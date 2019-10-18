@@ -47,4 +47,3 @@ steps:
     Contents: 'ioflow-*.tar.gz'
     ArtifactName: 'ioflow_package'
     ArtifactType: 'Container'
-    ArtifactType: 'Container'
