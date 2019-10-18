@@ -37,3 +37,8 @@ steps:
 - script: |
     make dist
   displayName: 'build pacakge'
+  
+- task: PublishPipelineArtifact@1
+  inputs:
+    targetPath: '$(Pipeline.Workspace)/dist'
+    artifact: 'ioflow_package'
