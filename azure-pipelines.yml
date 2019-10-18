@@ -26,6 +26,25 @@ steps:
   displayName: 'Install myself'
 
 - script: |
-    pip install pytest pytest-azurepipelines
+    pip install -r ./dev_requirements.txt
+    pip install -r ./test_requirements.txt
+  displayName: 'Install depdnencies'
+
+- script: |
     make test
-  displayName: 'make test'
+  displayName: 'run test'
+
+- script: |
+    make dist
+  displayName: 'build pacakge'
+
+- task: PublishBuildArtifacts@0
+  inputs:
+    ArtifactName: 
+- task: PublishBuildArtifacts@0
+  inputs:
+    CopyRoot: 'dist'
+    Contents: 'ioflow-*.tar.gz'
+    ArtifactName: 'ioflow_package'
+    ArtifactType: 'Container'
+    ArtifactType: 'Container'
