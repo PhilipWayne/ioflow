@@ -37,10 +37,3 @@ steps:
 - script: |
     make dist
   displayName: 'build pacakge'
-
-- task: PublishBuildArtifacts@0
-  inputs:
-    CopyRoot: 'dist'
-    Contents: 'ioflow-*.tar.gz'
-    ArtifactName: 'ioflow_package'
-    ArtifactType: 'Container'
