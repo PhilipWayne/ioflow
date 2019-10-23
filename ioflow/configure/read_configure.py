@@ -32,8 +32,12 @@ def read_configure(return_empty=False) -> dict:
     if return_empty:
         return {}
 
-    default_configure_candidate = [".".join(["./configure", ext]) for ext in ["yaml", "yml", "json"]]
-    builtin_configure_candidate = [".".join(["./builtin_configure", ext]) for ext in ["yaml", "yml", "json"]]
+    default_configure_candidate = [
+        ".".join(["./configure", ext]) for ext in ["yaml", "yml", "json"]
+    ]
+    builtin_configure_candidate = [
+        ".".join(["./builtin_configure", ext]) for ext in ["yaml", "yml", "json"]
+    ]
 
     default_configure = find_best_file_candidate(default_configure_candidate)
     builtin_configure = find_best_file_candidate(builtin_configure_candidate)
@@ -55,10 +59,17 @@ def read_configure(return_empty=False) -> dict:
     active_configure_file_abs_path = os.path.realpath(active_configure_file)
 
     if not os.path.exists(active_configure_file):
-        print(">>> default configure file is not found!")
-        raise ValueError("default configure file is not found!")
+        msg = "default configure file is not found! CWD: {}; activate_config: {}; builtin_configure".format(
+            os.getcwd(), active_configure_file, builtin_configure_file
+        )
+        print(msg)
+        raise ValueError(msg)
     else:
-        print(">>> Using configure read from file: {}".format(active_configure_file_abs_path))
+        print(
+            ">>> Using configure read from file: {}".format(
+                active_configure_file_abs_path
+            )
+        )
 
     file_encoding = guess_configure_file_type(active_configure_file_abs_path)
     Pconf.file(active_configure_file, file_encoding)
