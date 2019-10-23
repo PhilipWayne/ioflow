@@ -59,7 +59,7 @@ def read_configure(return_empty=False) -> dict:
     active_configure_file_abs_path = os.path.realpath(active_configure_file)
 
     if not os.path.exists(active_configure_file):
-        msg = "default configure file is not found! CWD: {}; activate_config: {}; builtin_configure".format(
+        msg = "default configure file is not found! CWD: {}; activate_config: {}; builtin_configure: {}".format(
             os.getcwd(), active_configure_file, builtin_configure_file
         )
         print(msg)
