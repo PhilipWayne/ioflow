@@ -17,7 +17,7 @@ install_requires = [
 
 setup(
     name="ioflow",
-    version="0.8.1",
+    version="0.9.0",
     packages=setuptools.find_packages(),
     url="https://github.com/howl-anderson/ioflow",
     license="Apache 2.0",
