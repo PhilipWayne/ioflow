@@ -1,23 +1,6 @@
 import setuptools
 from setuptools import setup
 
-
-def is_tensorflow_installed():
-    """
-    detect if tensorflow (no matter CPU or GPU based) installed
-
-    :return: bool, True for tensorflow installed
-    """
-    import importlib
-
-    try:
-        importlib.import_module("tensorflow")
-    except ModuleNotFoundError:
-        return False
-
-    return True
-
-
 # without tensorflow by default
 install_requires = [
     "numpy",
@@ -27,10 +10,9 @@ install_requires = [
     "jsonlines",
     "pconf",
     "tokenizer_tools",
+    "tf_summary_reader",
+    "tensorflow>=1.15.0,<2.0.0"
 ]
-
-if not is_tensorflow_installed():
-    install_requires.append("tensorflow")  # Will install CPU based TensorFlow
 
 
 setup(
